@@ -1,6 +1,6 @@
 # Linux 系统连接同济大学 VPN 解决方案
 
-同济大学使用 Pulse Secure (Juniper Pulse) 的 VPN 认证服务，本应在 Linux 下支持 [openconnect|https://github.com/openconnect/openconnect] 的连接，但是用`openconnect --juniper vpn.tongji.cn`连接时，在选择 Realm 时会出现这个：
+同济大学使用 Pulse Secure (Juniper Pulse) 的 VPN 认证服务，本应在 Linux 下支持 [openconnect](https://github.com/openconnect/openconnect) 的连接，但是用`openconnect --juniper vpn.tongji.cn`连接时，在选择 Realm 时会出现这个：
 
 ```
 GET https://vpn.tongji.cn/dana-na/auth/url_default/welcome.cgi
@@ -31,7 +31,7 @@ realm [
 realm [校外用户|统一身份认证用户]: # 可在此输入“校外用户”和“统一身份认证用户”
 ```
 
-但是，由于 [https://vpn.tongji.cn/dana-na/auth/url_default/welcome.cgi] 源代码中的
+但是，由于 [](https://vpn.tongji.cn/dana-na/auth/url_default/welcome.cgi) 源代码中的
 
 ```
 <select size="1" name="realm">
@@ -54,7 +54,7 @@ realm [校外用户|统一身份认证用户]: # 可在此输入“校外用户�
 ## 操作方法
 
 - 满足 `requirements.txt` 中的 pip 包依赖
-- 安装 [ocproxy|https://github.com/cernekee/ocproxy] 以将 openconnect 建立的 vpn 转换为 socks5 代理。如果你不需要，请在 `tongji.cfg` 中作修改
+- 安装 [ocproxy](https://github.com/cernekee/ocproxy) 以将 openconnect 建立的 vpn 转换为 socks5 代理。如果你不需要，请在 `tongji.cfg` 中作修改
 - 运行 `python(2) juniper-vpn.py -c tongji.cfg`
 
 # Old Readme
