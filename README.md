@@ -51,6 +51,8 @@ realm [校外用户|统一身份认证用户]: # 可在此输入“校外用户�
 
 故必须绕过这一输入。juniper-vpn-py 用获取网页填写表单获取 DSID token 再传给 openconnect 的方式达到这一点。
 
+这个 Forked Repository 对于 juniper-vpn-py 做了一些改动，使其支持选择带中文 Unicode 字符的 Realm。
+
 ## 操作方法
 
 - 满足 `requirements.txt` 中的 pip 包依赖
