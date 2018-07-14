@@ -141,15 +141,22 @@ class juniper_vpn(object):
         return None
 
     def next_action(self):
+        print "Cookie after Clear"
+        for cookie in self.cj:
+            print cookie
         if self.find_cookie('DSID'):
+            print 'Next action: connect'
             return 'connect'
 
         for form in self.br.forms():
             if form.name == 'frmLogin':
+                print 'Next action: login'
                 return 'login'
             elif form.name == 'frmDefender':
+                print 'Next action: key'
                 return 'key'
             elif form.name == 'frmConfirmation':
+                print 'Next action: continue'
                 return 'continue'
             else:
                 raise Exception('Unknown form type:', form.name)
@@ -262,18 +269,35 @@ class juniper_vpn(object):
             action.append(arg)
 
         p = subprocess.Popen(action, stdin=subprocess.PIPE)
+        print "Subprocess Open"
+        print action
         if args.stdin is not None:
             stdin = args.stdin.replace('%DSID%', dsid)
             stdin = stdin.replace('%HOST%', self.args.host)
+            print "Subprocess Stdin: ", stdin
             p.communicate(input = stdin)
+            
         else:
+            print "Subprocess Wait"
             ret = p.wait()
+            
         ret = p.returncode
 
+        print "Ret Code", ret
         # Openconnect specific
-        if ret == 2:
+        if ret == 2 or ret == 1:
+            print "Ret Code openconnect specific"
+            try:
+                p.kill()
+            except OSError:
+                pass
+                
             self.cj.clear(self.args.host, '/', 'DSID')
-            self.r = self.br.open(self.r.geturl())
+            print "Cookie after Clear"
+            for cookie in self.cj:
+                print cookie
+            self.r = self.br.open('https://' + self.args.host)
+            self.br.set_cookiejar(self.cj)
 
 def cleanup():
     os.killpg(0, signal.SIGTERM)
