@@ -331,7 +331,7 @@ if __name__ == "__main__":
                     'user_agent', 'pass_prefix', 'realm']:
             if args.__dict__[arg] is None:
                 try:
-                    args.__dict__[arg] = config.get('vpn', arg)
+                    args.__dict__[arg] = config.get('vpn', arg).decode("utf-8")
                 except:
                     pass
 
